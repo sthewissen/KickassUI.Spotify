@@ -1,4 +1,4 @@
-# KickassUI.Runkeeper
+# KickassUI.Spotify
 A Xamarin.Forms version of the Spotify app to prove you can create goodlooking UI with Xamarin.Forms as talked about in my blogpost on: https://www.thewissen.io/xamarin-forms-ui-spotify/
 
 ## Tools used
