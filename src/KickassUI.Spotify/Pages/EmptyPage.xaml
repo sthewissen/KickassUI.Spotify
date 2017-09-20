@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage BackgroundColor="#181818" Title="Nothing to see here..." ios:NavigationPage.IsNavigationBarTranslucent="true"
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+    x:Class="KickassUI.Spotify.Pages.EmptyPage">
+	<ContentPage.Content>
+        <Grid>
+            <Label Text="Nothing to see here..." Style="{StaticResource MediumLabel}"  TextColor="#FFF" FontSize="16" 
+                HorizontalTextAlignment="Center" VerticalTextAlignment="Center" HorizontalOptions="Fill" VerticalOptions="Fill" />
+      </Grid>
+	</ContentPage.Content>
+</ContentPage>

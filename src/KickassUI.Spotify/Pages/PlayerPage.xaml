@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<controls:ModalPage Title="AFSPELEN VAN AFSPEELLIJST" Subtitle="Kickass Tunes" BackgroundColor="#181818"
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:controls="clr-namespace:KickassUI.Spotify.Controls;assembly=KickassUI.Spotify"
+    xmlns:effects="clr-namespace:KickassUI.Spotify.Effects;assembly=KickassUI.Spotify"
+    x:Class="KickassUI.Spotify.Pages.PlayerPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Icon="icon_chevron_down" Command="{Binding ClosePlayerCommand}" />
+        <ToolbarItem Icon="icon_playlist" />
+    </ContentPage.ToolbarItems>
+	<ContentPage.Content>
+        <controls:PaddedScrollView Orientation="Vertical">
+            <Grid>
+                <AbsoluteLayout>
+                    <controls:BlurredImage AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" InputTransparent="false" x:Name="artwork" 
+                    HorizontalOptions="FillAndExpand" Aspect="Fill" VerticalOptions="FillAndExpand" Source="{Binding Song.AlbumImageUrl}" />
+                </AbsoluteLayout>
+                <StackLayout HorizontalOptions="FillAndExpand"> 
+                    <StackLayout.Padding>
+                        <OnPlatform x:TypeArguments="Thickness">
+                            <On Platform="Android" Value="30,10,30,0"/>
+                            <On Platform="iOS" Value="30,70,30,0"/>
+                        </OnPlatform>
+                    </StackLayout.Padding>
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" HeightRequest="60">
+                        <StackLayout.IsVisible>
+                            <OnPlatform x:TypeArguments="x:Boolean">
+                                <On Platform="Android" Value="true" />
+                                <On Platform="iOS" Value="false" />
+                            </OnPlatform>
+                        </StackLayout.IsVisible>
+                        <Image Source="icon_chevron_down" VerticalOptions="Center" HorizontalOptions="Start">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ClosePlayerCommand}"/>
+                            </Image.GestureRecognizers>
+                        </Image>
+                        <StackLayout VerticalOptions="Center" HorizontalOptions="FillAndExpand">
+                            <Label Text="NOW PLAYING FROM PLAYLIST" TextColor="#FFF" FontSize="12" HorizontalTextAlignment="Center" HorizontalOptions="Fill" />
+                            <Label Text="Kickass Tunes" Margin="0,-5,0,0" TextColor="#FFF" FontSize="12" HorizontalTextAlignment="Center" HorizontalOptions="Fill" />
+                        </StackLayout>
+                        <Image Source="icon_playlist" VerticalOptions="Center" HorizontalOptions="End" />
+                    </StackLayout>
+                    <Image Source="{Binding Song.AlbumImageUrl}" VerticalOptions="Center">
+                        <Image.HeightRequest>
+                            <OnPlatform x:TypeArguments="x:Double">
+                                <On Platform="Android" Value="300" />
+                                <On Platform="iOS" Value="325" />
+                            </OnPlatform>
+                        </Image.HeightRequest>
+                    </Image>
+                    <Grid Margin="0,20,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Image Source="icon_plus" Grid.Column="0" HorizontalOptions="Center" />
+                        <StackLayout Grid.Column="1" HorizontalOptions="Center">
+                            <Label Text="{Binding Song.Title}" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" Style="{StaticResource BoldLabel}" FontSize="18" TextColor="White" />
+                            <Label Margin="0,-5,0,0" Text="{Binding Song.Artist}" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" FontSize="14" TextColor="#adaeb2" />
+                        </StackLayout>
+                        <Image Source="icon_ellipsis" Grid.Column="2" HorizontalOptions="Center" />
+                    </Grid>
+                    <ContentView>
+                        <ContentView.IsVisible>
+                            <OnPlatform x:TypeArguments="x:Boolean">
+                                <On Platform="Android" Value="false"/>
+                                <On Platform="iOS" Value="true"/>
+                            </OnPlatform>
+                        </ContentView.IsVisible>
+                        <StackLayout Margin="0,0,0,0" Orientation="Horizontal">
+                            <Label Text="{Binding Ticks, Converter={StaticResource SecondsToTimeConverter}}" TextColor="#adaeb2" FontSize="10" HorizontalOptions="StartAndExpand" />
+                            <Label Text="{Binding TicksLeft, Converter={StaticResource SecondsToTimeConverter}}" TextColor="#adaeb2" FontSize="10" HorizontalOptions="End" />
+                        </StackLayout>
+                        <controls:AudioSlider HasThumb="true" HeightRequest="4" Minimum="0" Maximum="{Binding Song.LengthInSeconds}" Value="{Binding Ticks, Mode=TwoWay}">
+                            <controls:AudioSlider.Margin>
+                                <OnPlatform x:TypeArguments="Thickness">
+                                    <On Platform="iOS" Value="-5,0,-5,0" />
+                                    <On Platform="Android" Value="-5,0,-5,0" />
+                                </OnPlatform>
+                            </controls:AudioSlider.Margin>
+                        </controls:AudioSlider>
+                    </ContentView>
+                     <StackLayout Margin="0,0,0,0" Orientation="Horizontal">
+                        <StackLayout.IsVisible>
+                            <OnPlatform x:TypeArguments="x:Boolean">
+                                <On Platform="Android" Value="true"/>
+                                <On Platform="iOS" Value="false"/>
+                            </OnPlatform>
+                        </StackLayout.IsVisible>
+                        <Label Text="{Binding Ticks, Converter={StaticResource SecondsToTimeConverter}}" Margin="0,0,5,0" TextColor="#adaeb2" FontSize="10" HorizontalOptions="Start" />
+                        <controls:AudioSlider HasThumb="true" HorizontalOptions="FillAndExpand" VerticalOptions="Center" HeightRequest="4" Minimum="0" Maximum="{Binding Song.LengthInSeconds}" Value="{Binding Ticks, Mode=TwoWay}">
+                            <controls:AudioSlider.Margin>
+                                <OnPlatform x:TypeArguments="Thickness">
+                                    <On Platform="iOS" Value="-5,0,-5,0" />
+                                    <On Platform="Android" Value="-5,0,-5,0" />
+                                </OnPlatform>
+                            </controls:AudioSlider.Margin>
+                        </controls:AudioSlider>
+                        <Label Text="{Binding TicksLeft, Converter={StaticResource SecondsToTimeConverter}}" Margin="5,0,0,0" TextColor="#adaeb2" FontSize="10" HorizontalOptions="End" />
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                        <Image VerticalOptions="Center" Margin="0,0,30,0" Source="button_shuffle" />
+                        <Image VerticalOptions="Center" Source="button_back" />
+                        <Image VerticalOptions="Center" Source="button_play">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer  Command="{Binding PlayCommand}"/>
+                            </Image.GestureRecognizers>
+                            <Image.Triggers>
+                                <DataTrigger TargetType="Image" Binding="{Binding IsPlaying}" Value="true">
+                                    <Setter Property="Source" Value="button_pause" />
+                                </DataTrigger>
+                                <DataTrigger TargetType="Image" Binding="{Binding IsPlaying}" Value="false">
+                                    <Setter Property="Source" Value="button_play" />
+                                </DataTrigger>
+                            </Image.Triggers>
+                        </Image>
+                        <Image VerticalOptions="Center" Source="button_forward" />
+                        <Image VerticalOptions="Center" Margin="30,0,0,0" Source="button_repeat" />
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                        <StackLayout.Margin>
+                            <OnPlatform x:TypeArguments="Thickness">
+                                <On Platform="Android" Value="0,0,0,0"/>
+                                <On Platform="iOS" Value="0,10,0,0"/>
+                            </OnPlatform>
+                        </StackLayout.Margin>
+                        <Image Source="icon_devices" WidthRequest="20" />
+                        <Label TextColor="White" HorizontalTextAlignment="Center" Margin="-5,0,0,0" FontSize="11" Text="Devices Available" />
+                    </StackLayout>
+                </StackLayout>
+            </Grid>
+        </controls:PaddedScrollView>
+	</ContentPage.Content>
+</controls:ModalPage>

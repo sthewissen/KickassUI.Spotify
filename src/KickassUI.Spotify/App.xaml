@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:converters="clr-namespace:KickassUI.Spotify.Converters;assembly=KickassUI.Spotify"
+    x:Class="KickassUI.Spotify.App">
+	<Application.Resources>
+		<!-- Application resource dictionary -->
+        <ResourceDictionary>
+            <converters:SecondsToTimeConverter x:Key="SecondsToTimeConverter" />
+
+            <!-- Styles for common elements -->
+            <Style TargetType="Label">
+                <Setter Property="FontFamily">
+                    <Setter.Value>
+                      <OnPlatform x:TypeArguments="x:String">
+                        <OnPlatform.iOS>CircularSpotifyTxT-Book</OnPlatform.iOS>
+                        <OnPlatform.Android>circular_book.ttf#CircularSpotifyTxT-Book</OnPlatform.Android>
+                      </OnPlatform>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            
+            <!-- Styles for common elements -->
+            <Style TargetType="Label" x:Key="BoldLabel">
+                <Setter Property="FontFamily">
+                    <Setter.Value>
+                      <OnPlatform x:TypeArguments="x:String">
+                        <OnPlatform.iOS>CircularSpotifyTxT-Bold</OnPlatform.iOS>
+                        <OnPlatform.Android>circular_bold.ttf#CircularSpotifyTxT-Bold</OnPlatform.Android>
+                      </OnPlatform>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style TargetType="Label" x:Key="MediumLabel">
+                <Setter Property="FontFamily">
+                    <Setter.Value>
+                      <OnPlatform x:TypeArguments="x:String">
+                        <OnPlatform.iOS>CircularSpotifyTxT-Med</OnPlatform.iOS>
+                        <OnPlatform.Android>circular_medium.ttf#CircularSpotifyTxT-Med</OnPlatform.Android>
+                      </OnPlatform>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+	</Application.Resources>
+</Application>

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage BackgroundColor="#181818" Title="Home"
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:behaviors="clr-namespace:Corcav.Behaviors;assembly=Corcav.Behaviors"
+    xmlns:controls="clr-namespace:KickassUI.Spotify.Controls;assembly=KickassUI.Spotify"
+    x:Class="KickassUI.Spotify.Pages.MainPage">
+	<ContentPage.Content>
+        <StackLayout>
+            <ContentView BackgroundColor="#222327" HeightRequest="80">
+                <ContentView.IsVisible>
+                    <OnPlatform x:TypeArguments="x:Boolean">
+                        <On Platform="Android" Value="true" />
+                        <On Platform="iOS" Value="false" />
+                    </OnPlatform>
+                </ContentView.IsVisible>
+                <Label Text="Home" Style="{StaticResource MediumLabel}"  TextColor="#FFF" FontSize="16" 
+                HorizontalTextAlignment="Center" VerticalTextAlignment="Center" HorizontalOptions="Fill" />
+            </ContentView>
+           <controls:PaddedScrollView VerticalOptions="FillAndExpand" Orientation="Vertical">
+                <controls:PaddedScrollView.Padding>
+                    <OnPlatform x:TypeArguments="Thickness">
+                        <On Platform="iOS" Value="0,85,0,0" />
+                        <On Platform="Android" Value="0,10,0,0" />
+                    </OnPlatform>
+                </controls:PaddedScrollView.Padding>
+                <controls:PaddedScrollView.Margin>
+                    <OnPlatform x:TypeArguments="Thickness">
+                        <On Platform="iOS" Value="0,0,0,-60" />
+                        <On Platform="Android" Value="0,0,0,0" />
+                    </OnPlatform>
+                </controls:PaddedScrollView.Margin>
+                <StackLayout VerticalOptions="StartAndExpand">
+                    <StackLayout VerticalOptions="StartAndExpand">
+                        <Label Style="{StaticResource BoldLabel}" Text="Made For You" TextColor="White" HorizontalTextAlignment="Center" FontSize="18" />
+                        <Label Margin="40,-5,0,10" Text="Get better recommendations the more you listen." TextColor="#adaeb2" FontSize="13" />
+                        <controls:HorizontalScrollView HeightRequest="200" SelectedCommand="{Binding OpenPlayerCommand}" Orientation="Horizontal"  ItemsSource="{Binding Songs}">
+                            <controls:HorizontalScrollView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <StackLayout Margin="10,0,5,0" WidthRequest="150" HeightRequest="150">
+                                            <Image HorizontalOptions="Start" Source="{Binding AlbumImageUrl}" WidthRequest="150" HeightRequest="150" />
+                                            <Label Style="{StaticResource BoldLabel}" HorizontalTextAlignment="Center" FontSize="13" LineBreakMode="TailTruncation" Text="{Binding Title}" TextColor="White"/>
+                                            <Label HorizontalTextAlignment="Center" Margin="0,-5,0,0" LineBreakMode="TailTruncation" FontSize="12" Text="{Binding Artist}" TextColor="#adaeb2"/>
+                                        </StackLayout>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </controls:HorizontalScrollView.ItemTemplate>
+                        </controls:HorizontalScrollView>
+                    </StackLayout>
+                    <StackLayout VerticalOptions="StartAndExpand" Margin="0,30,0,0">
+                        <Label Style="{StaticResource BoldLabel}" Text="Jump Back In" TextColor="White" HorizontalTextAlignment="Center" FontSize="18" />
+                        <controls:HorizontalScrollView HeightRequest="200" Orientation="Horizontal"  ItemsSource="{Binding Albums}">
+                            <controls:HorizontalScrollView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <StackLayout Margin="10,0,5,0" WidthRequest="150" HeightRequest="150">
+                                            <Image HorizontalOptions="Start" Source="{Binding ImageUrl}" WidthRequest="150" HeightRequest="150" />
+                                            <Label Style="{StaticResource BoldLabel}" HorizontalTextAlignment="Center" FontSize="13" LineBreakMode="TailTruncation" Text="{Binding Name}" TextColor="White"/>
+                                            <Label HorizontalTextAlignment="Center" Margin="0,-5,0,0" LineBreakMode="TailTruncation" FontSize="13" Text="{Binding Artist}" TextColor="#adaeb2"/>
+                                        </StackLayout>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </controls:HorizontalScrollView.ItemTemplate>
+                        </controls:HorizontalScrollView>
+                    </StackLayout> 
+                    <StackLayout VerticalOptions="StartAndExpand" Margin="0,30,0,0">
+                        <Label Style="{StaticResource BoldLabel}" Text="Recently Played" TextColor="White" HorizontalTextAlignment="Center" FontSize="18" />
+                        <controls:HorizontalScrollView HeightRequest="200" Orientation="Horizontal"  ItemsSource="{Binding Playlists}">
+                            <controls:HorizontalScrollView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <StackLayout Margin="10,0,5,0" WidthRequest="150" HeightRequest="150">
+                                            <Image HorizontalOptions="Start" Source="{Binding ImageUrl}" WidthRequest="150" HeightRequest="150" />
+                                            <Label Style="{StaticResource BoldLabel}" HorizontalTextAlignment="Center" FontSize="13" LineBreakMode="TailTruncation" Text="{Binding Name}" TextColor="White"/>
+                                            <Label HorizontalTextAlignment="Center" Margin="0,-5,0,0" LineBreakMode="TailTruncation" FontSize="12" Text="{Binding NrOfFollowers, StringFormat='{0:N0} VOLGERS'}" TextColor="#adaeb2"/>
+                                        </StackLayout>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </controls:HorizontalScrollView.ItemTemplate>
+                        </controls:HorizontalScrollView>
+                    </StackLayout>
+                </StackLayout>
+            </controls:PaddedScrollView>
+            <Grid BackgroundColor="#222326" RowSpacing="0" ColumnSpacing="0" Padding="0" Margin="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="4" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <controls:AudioSlider HeightRequest="4" HasThumb="false" Minimum="0" Maximum="243" Margin="0" Value="5" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HorizontalOptions="Fill" />
+                <Image HeightRequest="40" WidthRequest="40" Margin="5,0,0,5" Source="icon_chevron_up" VerticalOptions="Center" Grid.Row="1" Grid.Column="0" />
+                <StackLayout Grid.Row="1" Grid.Column="1" VerticalOptions="Center">
+                    <StackLayout.HeightRequest>
+                        <OnPlatform x:TypeArguments="x:Double">
+                            <On Platform="Android" Value="50"/>
+                            <On Platform="iOS" Value="40"/>
+                        </OnPlatform>
+                    </StackLayout.HeightRequest>
+                    <StackLayout.Margin>
+                        <OnPlatform x:TypeArguments="Thickness">
+                            <On Platform="Android" Value="0,10,0,0"/>
+                        </OnPlatform>
+                    </StackLayout.Margin>
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="2">
+                        <Label TextColor="#ffffff" HorizontalTextAlignment="Center" Text="Mercy">
+                            <Label.FontSize>
+                                <OnPlatform x:TypeArguments="x:Double">
+                                    <On Platform="Android" Value="14"/>
+                                    <On Platform="iOS" Value="11"/>
+                                </OnPlatform>
+                            </Label.FontSize>
+                        </Label>
+                        <Label TextColor="#ffffff" HorizontalTextAlignment="Center" FontSize="10" Text="•">
+                            <Label.FontSize>
+                                <OnPlatform x:TypeArguments="x:Double">
+                                    <On Platform="Android" Value="13"/>
+                                    <On Platform="iOS" Value="10"/>
+                                </OnPlatform>
+                            </Label.FontSize>
+                        </Label>
+                        <Label TextColor="#adaeb2" HorizontalTextAlignment="Center" FontSize="11" Text="Muse">
+                            <Label.FontSize>
+                                <OnPlatform x:TypeArguments="x:Double">
+                                    <On Platform="Android" Value="14"/>
+                                    <On Platform="iOS" Value="11"/>
+                                </OnPlatform>
+                            </Label.FontSize>
+                        </Label>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                        <Image Source="icon_devices" WidthRequest="20" Margin="0,-7,0,0" />
+                        <Label TextColor="White" HorizontalTextAlignment="Center" Margin="-5,-7,0,0" FontSize="11" Text="Devices Available">
+                            <Label.FontSize>
+                                <OnPlatform x:TypeArguments="x:Double">
+                                    <On Platform="Android" Value="13"/>
+                                    <On Platform="iOS" Value="11"/>
+                                </OnPlatform>
+                            </Label.FontSize>
+                        </Label>
+                    </StackLayout>
+                </StackLayout>
+                <Image HeightRequest="40" WidthRequest="40" Margin="0,0,5,5" Source="icon_play_small" VerticalOptions="Center" Grid.Row="1" Grid.Column="2"  />
+            </Grid>
+        </StackLayout>
+	</ContentPage.Content>
+</ContentPage>
